@@ -46,7 +46,7 @@ def convert_currency(amount, to_currency):
         return None, None
 
 # Main UI
-st.title("✨ CloudExpense Wizard ✨")
+st.title("☁️ CloudExpense Wizard ☁️")
 provider = st.selectbox("Select your Cloud Provider", ["AWS", "Azure", "Google Cloud"])
 
 # Set background based on selected provider
