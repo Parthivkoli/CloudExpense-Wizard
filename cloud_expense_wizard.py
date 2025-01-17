@@ -1,5 +1,4 @@
 import streamlit as st
-from forex_python.converter import CurrencyRates
 
 # Set page configuration
 st.set_page_config(
@@ -28,19 +27,22 @@ def set_background(image_url):
         unsafe_allow_html=True
     )
 
-# Initialize currency converter
-currency_rates = CurrencyRates()
+# Predefined conversion rates (example)
+conversion_rates = {
+    "USD": 1.0,  # USD to USD
+    "INR": 74.50,  # USD to INR (example)
+    "GBP": 0.75,   # USD to GBP (example)
+    "EUR": 0.85    # USD to EUR (example)
+}
 
 def convert_currency(amount, to_currency):
-    try:
-        rate = currency_rates.get_rate('USD', to_currency)
-        if rate is None:
-            st.error("No exchange rate data found.")
-            return None, None
+    # Check if the currency exists in the predefined rates
+    if to_currency in conversion_rates:
+        rate = conversion_rates[to_currency]
         converted_amount = amount * rate
         return converted_amount, rate
-    except Exception as e:
-        st.error(f"Error converting currency: {e}")
+    else:
+        st.error("Currency conversion rate not available.")
         return None, None
 
 # Main UI
