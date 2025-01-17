@@ -1,0 +1,2 @@
+streamlit==1.25.0
+forex-python==1.8
