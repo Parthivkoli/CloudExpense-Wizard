@@ -34,6 +34,9 @@ currency_rates = CurrencyRates()
 def convert_currency(amount, to_currency):
     try:
         rate = currency_rates.get_rate('USD', to_currency)
+        if rate is None:
+            st.error("No exchange rate data found.")
+            return None, None
         converted_amount = amount * rate
         return converted_amount, rate
     except Exception as e:
@@ -72,9 +75,7 @@ storage_cost = {
     "Google Cloud": 0.018
 }
 
-instance_cost = instances * hours * cost_per_instance[provider]
-storage_cost_total = storage * storage_cost[provider]
-total_cost_usd = instance_cost + storage_cost_total
+total_cost_usd = (instances * hours * cost_per_instance[provider]) + (storage * storage_cost[provider])
 
 # Currency conversion
 st.subheader("Currency Conversion")
@@ -88,11 +89,6 @@ else:
 if converted_cost is not None:
     st.metric(label=f"Your Estimated Cost ({currency})", value=f"{converted_cost:.2f}")
     st.caption(f"Conversion rate: 1 USD = {conversion_rate:.4f} {currency}")
-
-# Cost breakdown
-st.subheader("Cost Breakdown")
-st.write(f"Cost for Instances: {instance_cost:.2f} USD")
-st.write(f"Cost for Storage: {storage_cost_total:.2f} USD")
 
 # Optimization suggestions
 st.header("Optimization Suggestions")
