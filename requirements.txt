@@ -1,2 +1,4 @@
-streamlit==1.25.0
-forex-python==1.8
+streamlit
+forex-python
+pillow
+requests
